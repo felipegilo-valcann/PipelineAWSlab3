@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo "Instalando dependências..."
+      - npm install
+  build:
+    commands:
+      - echo "Executando build do projeto..."
+      - npm run build
+  post_build:
+    commands:
+      - echo "Sincronizando arquivos para o bucket S3..."
+      - aws s3 sync ./build s3://felipegilo-pipeline --delete
+
+artifacts:
+  files:
+    - '**/*'
