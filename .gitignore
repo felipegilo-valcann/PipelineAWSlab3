@@ -1,0 +1,11 @@
+# Diretórios de build de produção
+/build
+/dist
+
+# Módulos de dependências
+/node_modules
+
+# Arquivos de logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
