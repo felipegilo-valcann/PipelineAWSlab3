@@ -2,20 +2,26 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      nodejs: 20
     commands:
-      - echo "Instalando dependências..."
+      # Exemplo para um projeto Node.js
+      - echo Installing dependencies...
       - npm install
   build:
     commands:
-      - echo "Executando build do projeto..."
-      - npm run build
+      # ESTA LINHA CRIA OS ARTEFATOS NO DIRETÓRIO ./build
+      - echo Running build command...
+      - npm run build 
+      # Se for um projeto React, Next.js, ou Vue, este comando 
+      # geralmente gera o diretório 'build' ou 'dist'.
+      
   post_build:
     commands:
-      - echo "Sincronizando arquivos para o bucket S3..."
-      - aws s3 sync ./build s3://felipegilo-pipeline --delete
-
+      # ESTA LINHA TENTA COPIAR O DIRETÓRIO GERADO
+      - echo Deploying to S3...
+      - aws s3 cp ./build $S3_BUCKET --recursive
+      
 artifacts:
+  # É uma boa prática listar o diretório de build como artefato
   files:
     - '**/*'
+  base-directory: 'build'
