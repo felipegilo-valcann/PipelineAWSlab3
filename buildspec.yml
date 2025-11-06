@@ -3,29 +3,26 @@ version: 0.2
 env:
   variables:
     S3_BUCKET: "s3://felipegilo-pipeline"
-    
+
 phases:
   install:
     commands:
-      # Exemplo para um projeto Node.js
-      - echo Installing dependencies...
-      - npm install
+      - echo "Installing dependencies..."
+      - npm ci || npm install
+
   build:
     commands:
-      # ESTA LINHA CRIA OS ARTEFATOS NO DIRETÓRIO ./build
-      - echo Running build command...
-      - npm run build 
-      # Se for um projeto React, Next.js, ou Vue, este comando 
-      # geralmente gera o diretório 'build' ou 'dist'.
-      
+      - echo "Running React build..."
+      - npm run build
+      - echo "Build completed."
+
   post_build:
     commands:
-      # ESTA LINHA TENTA COPIAR O DIRETÓRIO GERADO
-      - echo Deploying to S3...
-      - aws s3 cp ./build $S3_BUCKET --recursive
-      
+      - echo "Deploying build folder to S3..."
+      - aws s3 cp ./build $S3_BUCKET --recursive --acl public-read
+      - echo "✅ Deployment to S3 completed successfully."
+
 artifacts:
-  # É uma boa prática listar o diretório de build como artefato
   files:
     - '**/*'
   base-directory: 'build'
