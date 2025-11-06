@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    S3_BUCKET: "s3://felipegilo-pipeline"
+    S3_BUCKET: "felipegilo-pipeline"
 
 phases:
   install:
