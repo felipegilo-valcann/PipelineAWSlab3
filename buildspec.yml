@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  variables:
+    S3_BUCKET: "s3://felipegilo-pipeline"
+    
 phases:
   install:
     commands:
